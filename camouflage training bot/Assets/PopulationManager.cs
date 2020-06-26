@@ -7,7 +7,18 @@ public class PopulationManager : MonoBehaviour
     public GameObject PersonPrefab;
     public int populationSize = 10;
     List<GameObject> population = new List<GameObject>();
-    public static int elapsed;
+    public static float elapsed;
+    int trailTime = 10;
+    int generation = 1;
+
+    GUIStyle guiStyle = new GUIStyle();
+    void OnGUI()
+    {
+        guiStyle.fontSize = 50;
+        guiStyle.normal.textColor = Color.white;
+        GUI.Label(new Rect(10, 10, 100, 20), "Generation: " + generation, guiStyle);
+        GUI.Label(new Rect(10, 65, 100, 20), "Trail Time: " + (int)elapsed, guiStyle);
+    }
 
 
     // Start is called before the first frame update
@@ -27,6 +38,16 @@ public class PopulationManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        elapsed += Time.deltaTime;
+        if(elapsed > trailTime)
+        {
+            BreedNewPopulation();
+            elapsed = 0;
+        }
+    }
+
+    void BreedNewPopulation()
+    {
+
     }
 }
