@@ -7,6 +7,7 @@ public class DNA : MonoBehaviour
     public float r;
     public float g;
     public float b;
+    public float height;
     bool isDead = false;
     public float timeToDie = 0;
     SpriteRenderer sRenderer;
@@ -18,6 +19,7 @@ public class DNA : MonoBehaviour
         sRenderer = GetComponent<SpriteRenderer>();
         sCollider = GetComponent<Collider2D>();
         sRenderer.color = new Color(r, g, b);
+        this.transform.localScale = new Vector3(height, height, height);
     }
 
     // Update is called once per frame
