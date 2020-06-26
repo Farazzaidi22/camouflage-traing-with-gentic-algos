@@ -55,9 +55,18 @@ public class PopulationManager : MonoBehaviour
         DNA dna2 = parent2.GetComponent<DNA>();
 
         //swaping dna
-        offspring.GetComponent<DNA>().r = Random.Range(0, 10) < 5 ? dna1.r : dna2.r;
-        offspring.GetComponent<DNA>().g = Random.Range(0, 10) < 5 ? dna1.g : dna2.g;
-        offspring.GetComponent<DNA>().b = Random.Range(0, 10) < 5 ? dna1.b : dna2.b;
+        if(Random.Range(0,1000) > 5) //mutations
+        {
+            offspring.GetComponent<DNA>().r = Random.Range(0, 10) < 5 ? dna1.r : dna2.r;
+            offspring.GetComponent<DNA>().g = Random.Range(0, 10) < 5 ? dna1.g : dna2.g;
+            offspring.GetComponent<DNA>().b = Random.Range(0, 10) < 5 ? dna1.b : dna2.b;
+        }
+        else
+        {
+            offspring.GetComponent<DNA>().r = Random.Range(0.0f, 1.0f);
+            offspring.GetComponent<DNA>().g = Random.Range(0.0f, 1.0f);
+            offspring.GetComponent<DNA>().b = Random.Range(0.0f, 1.0f);
+        }
 
         return offspring;
     }
