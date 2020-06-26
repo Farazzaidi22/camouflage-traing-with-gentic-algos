@@ -17,6 +17,7 @@ public class DNA : MonoBehaviour
     {
         sRenderer = GetComponent<SpriteRenderer>();
         sCollider = GetComponent<Collider2D>();
+        sRenderer.color = new Color(r, g, b);
     }
 
     // Update is called once per frame
