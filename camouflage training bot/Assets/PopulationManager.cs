@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class PopulationManager : MonoBehaviour
 {
@@ -46,8 +47,42 @@ public class PopulationManager : MonoBehaviour
         }
     }
 
+    GameObject Breed(GameObject parent1, GameObject parent2)
+    {
+        Vector3 pos = new Vector3(Random.Range(-11, 11), Random.Range(-3, 5), 0);
+        GameObject offspring = Instantiate(PersonPrefab, pos, Quaternion.identity);
+        DNA dna1 = parent1.GetComponent<DNA>();
+        DNA dna2 = parent2.GetComponent<DNA>();
+
+        //swaping dna
+        offspring.GetComponent<DNA>().r = Random.Range(0, 10) < 5 ? dna1.r : dna2.r;
+        offspring.GetComponent<DNA>().g = Random.Range(0, 10) < 5 ? dna1.g : dna2.g;
+        offspring.GetComponent<DNA>().b = Random.Range(0, 10) < 5 ? dna1.b : dna2.b;
+
+        return offspring;
+    }
+
     void BreedNewPopulation()
     {
+        List<GameObject> newPopulation = new List<GameObject>();
+        //get rid of unfit objects
 
+        List<GameObject> sortedList = population.OrderBy(o => o.GetComponent<DNA>().timeToDie).ToList();
+        population.Clear();
+
+        //breed only the most fit half of the total population
+        for(int i = (int)(sortedList.Count/ 2) - 1; i < sortedList.Count - 1; i++)
+        {
+            population.Add(Breed(sortedList[i], sortedList[i + 1]));
+            population.Add(Breed(sortedList[i + 1], sortedList[i]));
+        }
+
+        //destory all previous parents and population
+        for(int i = 0; i <sortedList.Count; i++)
+        {
+            Destroy(sortedList[i]);
+        }
+
+        generation++;
     }
 }
